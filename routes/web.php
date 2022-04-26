@@ -16,3 +16,50 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//RUTA PAISES 
+Route::get('paises' , function(){
+    $paises=[
+        "Colombia" => [
+            'capital' => 'Bogotá',
+            'moneda' => 'Peso',
+            'poblacion' => 51.6,
+            'ciudades' => [
+                'Medellin',
+                'Cali',
+                'Barranquilla'
+            ]
+        ], 
+        "Perú" => [
+            'capital' => 'Lima',
+            'moneda' => 'Sol',
+            'poblacion' => 32.9,
+            'ciudades' => [
+                'Cusco',
+                'Arequipa',
+                'Chiclayo'
+            ]
+        ],
+        "Paraguay" => [
+            'capital' => 'Asuncion',
+            'moneda' => 'Guarani Paraguayo',
+            'poblacion' => 7.1,
+            'ciudades' => [
+                'Ciudad del Este',
+                'Luque',
+                'Encarnacion'
+            ]
+        ]
+    ];
+/*
+    echo "<pre>";
+    var_dump($paises);
+    echo "</pre>";
+*/
+
+
+    //mostar la vista de paises
+    return view('paises')
+            ->with('paises', $paises);
+
+});
