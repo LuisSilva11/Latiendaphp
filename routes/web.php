@@ -47,8 +47,8 @@ Route::get('paises' , function(){
             'poblacion' => 7.1,
             'ciudades' => [
                 'Ciudad del Este',
-                'Luque',
-                'Encarnacion'
+                'Luque'
+    
             ]
         ]
     ];
