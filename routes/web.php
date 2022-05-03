@@ -26,8 +26,9 @@ Route::get('paises' , function(){
             'poblacion' => 51.6,
             'ciudades' => [
                 'Medellin',
-                'Cali',
-                'Barranquilla'
+                'Pereira',
+                'Barranquilla',
+                'cali'
             ]
         ], 
         "Perú" => [
