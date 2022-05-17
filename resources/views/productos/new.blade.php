@@ -7,7 +7,8 @@
     </h1>
 </div>
 <div class="row">
-    <form class="col s8" method="POST" action="">
+    <form class="col s8" method="POST" action="{{ route('productos.store') }}">
+        @csrf
         <div class="row" >
             <div class="input-field col s8">
                 <input  id="nombre" name="nombre" type="text">
@@ -24,6 +25,30 @@
             <div class="input-field col s8">
                 <input id="precio" name="precio" type="text">
                 <label for="precio">Precio</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s8 input-field">
+                <select name="marca" id="marca">
+                    @foreach($marcas as $marca)
+                        <option value="{{ $marca->id }}">
+                            {{  $marca->nombre  }}
+                        </option>
+                    @endforeach
+                </select>
+                <label for="marca">Marca</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s8 input-field">
+                <select name="categoria" id="categoria">
+                    @foreach($categorias as $categoria)
+                        <option value="{{ $categoria->id }}">
+                            {{  $categoria->nombre  }}
+                        </option>
+                    @endforeach
+                </select>
+                <label for="marca">Categoria</label>
             </div>
         </div>
         <div class="row">
