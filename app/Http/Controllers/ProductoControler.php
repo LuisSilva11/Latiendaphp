@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoControler extends Controller
 {
@@ -41,17 +42,52 @@ class ProductoControler extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $r)
-    {
-        $p = new Producto;
-        //aginar valores a atributos del nuevo producto
-        $p->nombre = $r->nombre;
-        $p->desc = $r->desc;
-        $p->precio = $r->precio;
-        $p->marca_id = $r->marca;
-        $p->categoria_id = $r->categoria;
+    {   
+        //definir reglas de validacion
+        $reglas = [
+            "nombre" => 'required|alpha',
+            "desc" => 'required|min:10|max:50',
+            "precio" => 'required|numeric',
+            "marca" => 'required',
+            "categoria" => 'required'
+        ];
+        //mensajes personalizados
+        $mensajes =[
+            "required" => "Campo obligatorio",
+            "numeric" => "En este campo solo se permiten numeros",
+            "alpha" => "En este campo solo se permiten letras",
+            "min" => "En este campo no se permiten menos de 10 caracteres",
+            "max" => "En este campo no se permiten más de 50 caracteres"
+        ];
+        //crear un objeto validador 
+        $v = Validator::make($r->all() , $reglas , $mensajes);
+        //validar datos: metodo fails()
+        //retorna true en caso de validacion fallida
+        //        false en cado de validacion correcta
+        if($v->fails()){
+            //si la validacion falla
+            //mostrar mensaje de validacion
+            return redirect('productos/create')
+                ->withErrors($v)
+                ->withInput();
+        }else{
+            //si la validacion es correcta
+            $p = new Producto;
+            //aginar valores a atributos del nuevo producto
+            $p->nombre = $r->nombre;
+            $p->desc = $r->desc;
+            $p->precio = $r->precio;
+            $p->marca_id = $r->marca;
+            $p->categoria_id = $r->categoria;
+            //grabar el nuevo producto
+            $p->save();
+            //redireccionar a la ruta : create
+            return redirect('productos/create')
+            ->with('mensaje', 'PRODUCTO REGISTRADO CORRECTAMENTE');
+            };
 
-        $p->save();
-        echo "producto creado";
+        /*
+        */
     }
 
     /**
